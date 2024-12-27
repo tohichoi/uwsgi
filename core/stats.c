@@ -386,7 +386,9 @@ void uwsgi_send_stats(int fd, struct uwsgi_stats *(*func) (void)) {
 		ssize_t res = write(client_fd, us->base + pos, remains);
 		if (res <= 0) {
 			if (res < 0) {
+				// #define uwsgi_error(x)  uwsgi_log("%s: %s [%s line %d]\n", x, strerror(errno), __FILE__, __LINE__);
 				uwsgi_error("write()");
+				uwsgi_log("write() : %s", client_src.sun_path);
 			}
 			goto end0;
 		}
